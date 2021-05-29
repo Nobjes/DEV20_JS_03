@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ja">
+<script src="js/jquery-2.1.3.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/reset.css">
+
+<head>
+  <meta charset="utf-8" />
+  <title>DreamTalk</title>
+  <header><h1>DreamTalk</h1></header>
+</head>
+
+<body>
+
+<div class="bg_pattern Paper_v2"></div>
+
+<!-- コンテンツ表示画面 -->
+<!-- 名前 -->
+
+  <div class="username">
+    名前<br>
+    <input type="text" id="username">
+  </div>
+
+
+<!-- 年齢 -->
+    <div class="age">
+    年齢（半角数字）<br>
+      <input type="number" id="age">
+    </div>
+
+<div class="job">
+  <!-- 職業選択 -->
+  なりたい職業<br>
+  <select type="image" id="job" >
+    <option value="サッカー選手">サッカー選手<img src="img/警察官.png" alt="サッカー選手"></option>
+    <option value="Youtuber"><img src="img/Youtuber.png" alt="Youtuber">Youtuber</option>
+    <option value="警察官">警察官</option>
+    <option value="料理人">料理人</option>
+    <option value="芸人">芸人</option>
+    <option value="教師">教師</option>
+    <option value="声優">声優</option>
+    <option value="パティシエ">パティシエ</option>
+    <option value="美容師">美容師</option>
+    <option value="ゲーマー">ゲーマー</option>
+    <option value="宇宙飛行士">宇宙飛行士</option>
+    <option value="アーティスト">アーティスト</option>
+  </select>
+</div>
+
+
+<!-- 
+<img src="img/警察官.png" alt="">
+<img src="img/警察官.png" alt="">
+<img src="img/警察官.png" alt="">
+<img src="img/警察官.png" alt="">
+<img src="img/警察官.png" alt="">
+<img src="img/警察官.png" alt="">
+<img src="img/警察官.png" alt="">
+<img src="img/警察官.png" alt="">
+<img src="img/警察官.png" alt=""> -->
+
+
+  <div class="other">
+    <!-- その他のテキストエリア -->
+    その他（詳細／自由記述）<br>
+    <textarea name="" id="text" cols="1" rows="2"></textarea>
+  </div>
+
+<!-- 送信ボタン -->
+  <section class="send_button">
+    <a href="#" class="sendbox" id="send">送信</a>
+  </section>
+
+  <!-- 保存されたデータが表示される箇所 -->
+  <section class="output">
+  <div id="output">
+    <p>
+  <!--/ コンテンツ表示画面 -->
+
+  <!-- JQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- JQuery -->
+
+  <!--** 以下Firebase **-->
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+</p>
+</div>
+</section>
+
+  <script>
+    // Your web app's Firebase configuration
+   var firebaseConfig = {
+      apiKey: "AIzaSyD8tvDbGaihnhxBqdvvy8e7zKEXENz23x0",
+      authDomain: "dev20chat-d916a.firebaseapp.com",
+      databaseURL: "https://dev20chat-d916a-default-rtdb.firebaseio.com",
+      projectId: "dev20chat-d916a",
+      storageBucket: "dev20chat-d916a.appspot.com",
+      messagingSenderId: "865110750520",
+      appId: "1:865110750520:web:f84981f207f773eb713dcd"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    //firebaseのデーターベース（保存させる場所）を使いますよ
+    const newPostRef = firebase.database().ref();
+
+    // ここから下にjqueryの処理を書いて練習します
+
+
+  // 送信ボタンをクリックされたら次の処理をする
+  $("#send").on("click", function () {
+
+
+
+   
+    newPostRef.push({
+      username: $("#username").val(),
+      age: $("#age").val(),
+      job: $("#job").val(),
+      text: $("#text").val(),
+    })
+
+    //空にする処理
+    $("#username").val("");
+    $("#age").val("");
+    $("#job").val("");
+    $("#text").val(""); 
+  });
+
+
+    // // if文で条件を選択する
+    // // この自動の返答botが作りたかったけどできなかった
+
+    // if (job == サッカー選手)
+    //  {System.out.println("img/サッカー選手.png");
+
+    // else if (job == Youtuber) 
+    //   {System.out.println("img/Youtuber.png");
+
+    // else if (job == 警察官) 
+    //   {System.out.println("img/警察官.png");
+
+    // else if (job == 料理人) 
+    //   {System.out.println("img/料理人.png");
+
+    // else if (job == 芸人)   
+    //   {System.out.println("img/芸人.png");
+
+    // else if (job == 教師) 
+    //   {System.out.println("img/教師.png");
+
+    // else if (job == 声優) 
+    //   {System.out.println("img/声優.png");
+                      
+    // else if (job == パティシエ)
+    //   {System.out.println("img/パティシエ.png");
+
+    // else if (job == 美容師) 
+    //   {System.out.println("img/美容師.png");
+
+    // else if (job == ゲーマー) 
+    //   {System.out.println("img/ゲーマー.png");
+
+    // else if (job == 宇宙飛行士) 
+    //   {System.out.println("img/宇宙飛行士.png");
+
+    // else if (job == アーティスト) 
+    //   {System.out.println("img/アーティスト.png");
+    //   }
+
+
+    
+  // 受信処理（一番後ろに追加＝append）
+  newPostRef.on("child_added", function (data) {
+
+    let v = data.val();
+    let k = data.key;
+    let str = `<p>${v.username}<br>${v.age}<br>${v.job}<br>${v.text}</p>`;
+
+    $("#output").append(str);
+  })
+
+
+  $("#text").on("keydown", function (e) {
+    console.log(e, 'eventデータの塊')
+    if (e.keyCode === 13) {
+
+      // 送信処理を実行する
+
+      newPostRef.push({
+
+        username: $("#username").val(), //名前
+        age: $("#age").val(),
+        job: $("#job").val(),
+        text: $("#text").val(), //テキストエリア
+      })
+
+      $("#username").val("");
+      $("#age").val("");
+      $("#job").val(""); //空にする
+      $("text").val(""); //空にする
+
+    }
+  })
+  </script>
+</body>
+
+</html>
