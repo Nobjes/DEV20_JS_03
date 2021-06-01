@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ja">
+<script src="js/jquery-2.1.3.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/reset.css">
+
+<head>
+  <meta charset="utf-8" />
+  <title>DreamTalk</title>
+  <header><h1>DreamTalk</h1></header>
+</head>
+
+<body>
+
+<div class="bg_pattern Paper_v2"></div>
+
+<!-- コンテンツ表示画面 -->
+<!-- 名前 -->
+
+  <div class="username">
+    名前<br>
+    <input type="text" id="username">
+  </div>
+
+
+<!-- 年齢 -->
+    <div class="age">
+    年齢（半角数字）<br>
+      <input type="number" id="age">
+    </div>
+
+
+<!-- 得意な課目を選択 -->
+<div class="subject">
+  得意な教科<br>
+  <select type="text" id="subject" >
+    <option value="国語" class="kokugo">国語</option>
+    <option value="算数" class="sansuu">算数</option>
+    <option value="生物" class="seibutsu">生物</option>
+    <option value="物理" class="butsuri">物理</option>
+    <option value="日本史" class="nihonshi">日本史</option>
+    <option value="世界史" class="sekaishi">世界史</option>
+    <option value="地理" class="chiri">地理</option>
+    <option value="音楽" class="onngaku">音楽</option>
+    <option value="家庭科" class="kateika">家庭科</option>
+    <option value="保健体育" class="hokentaiiku">保健体育</option>
+    <option value="道徳" class="doutoku">道徳</option>
+    <option value="美術図工" class="bijutsuzukou">美術図工</option>
+  </select>
+</div>
+
+
+  <div class="other">
+    <!-- その他のテキストエリア -->
+    その他（詳細／自由記述）<br>
+    <textarea name="" id="text" cols="1" rows="2"></textarea>
+  </div>
+
+<!-- 送信ボタン -->
+  <section class="send_button">
+    <a href="#" class="sendbox" id="send">送信</a>
+  </section>
+
+  <!-- 保存されたデータが表示される箇所 -->
+  <section class="output">
+  <div id="output">
+    <p>
+  <!--/ コンテンツ表示画面 -->
+
+  <!-- JQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- JQuery -->
+
+  <!--** 以下Firebase **-->
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+</p>
+</div>
+</section>
+
+  <script>
+
+//  // <!-- jQueryで選択項目によって表示内容を変える -->  
+//   $("#subject").on("click", function () {
+
+//     // <!-- ifで分岐処理 -->  
+//     let view = "";
+
+//     if (option  == kokugo) {
+//       view = '<img src = img/教師.png>';
+//       console.log(view)
+//       // ここに加算の式を記述する
+//     }
+
+//     else if (option == sansuu) {
+//       view = '<img src = img/パティシエ.png>';
+
+//     else if (option == seibutsu) {
+//         view = '<img src = img/美容師.png>';
+
+//     else if (option == butsuri) {
+//         view = '<img src = img/宇宙飛行士.png>';
+
+//     else if (option == nihonshi) {
+//         view = '<img src = img/芸人.png>';
+
+//     else if (option == sekaishi) {
+//         view = '<img src = img/Youtuber.png>';
+
+//     else if (option == chiri) {
+//         view = '<img src = img/ゲーマー.png>';
+    
+//     else if (option == onngaku) {
+//         view = '<img src = img/声優.png>';
+
+//     else if (option == kateika) {
+//         view = '<img src = img/料理人.png>';
+
+//     else if (option == hokentaiiku) {
+//         view = '<img src = img/サッカー選手.png>';
+
+//     else if (option == doutoku) {
+//         view = '<img src = img/警察官.png>';
+       
+//     else if (option == bijutsuzukou) {
+//         view = '<img src = img/アーティスト.png>';
+        
+
+    // Your web app's Firebase configuration
+   var firebaseConfig = {
+      apiKey: "",
+      authDomain: "",
+      databaseURL: "",
+      projectId: "",
+      storageBucket: "",
+      messagingSenderId: "",
+      appId: ""
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    //firebaseのデーターベース（保存させる場所）を使いますよ
+    const newPostRef = firebase.database().ref();
+
+    // ここから下にjqueryの処理を書いて練習します
+
+
+  // 送信ボタンをクリックされたら次の処理をする
+  $("#send").on("click", function () {
+
+
+
+   
+    newPostRef.push({
+      username: $("#username").val(),
+      age: $("#age").val(),
+      subject: $("#subject").val(),
+      text: $("#text").val(),
+    })
+
+    //空にする処理
+    $("#username").val("");
+    $("#age").val("");
+    $("#subject").val("");
+    $("#text").val(""); 
+  });
+
+
+
+  // 受信処理（一番後ろに追加＝append）
+  newPostRef.on("child_added", function (data) {
+
+    let v = data.val();
+    let k = data.key;
+    let str = `<p>${v.username}<br>${v.age}<br>${v.subject}<br>${v.text}</p>`;
+
+    $("#output").append(str);
+  })
+
+
+  $("#text").on("keydown", function (e) {
+    console.log(e, 'eventデータの塊')
+    if (e.keyCode === 13) {
+
+      // 送信処理を実行する
+
+      newPostRef.push({
+
+        username: $("#username").val(), //名前
+        age: $("#age").val(),
+        subject: $("#subject").val(),
+        text: $("#text").val(), //テキストエリア
+      })
+
+      $("#username").val("");
+      $("#age").val("");
+      $("#subject").val(""); //空にする
+      $("text").val(""); //空にする
+
+    }
+  })
+  </script>
+</body>
+
+</html>
